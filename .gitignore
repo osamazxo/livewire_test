@@ -1,0 +1,17 @@
+# installed packages
+./backend/node_modules
+./frontend/node_modules
+
+# env
+./backend/*.env
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
