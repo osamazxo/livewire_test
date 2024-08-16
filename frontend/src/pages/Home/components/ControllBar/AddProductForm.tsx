@@ -22,6 +22,7 @@ const AddProductForm = ({
   const { mutate: addProduct, isPending } = useAddProduct({
     onSuccess: () => {
       setOpened(false);
+      formik.resetForm();
     },
   });
   const formik = useFormik<{

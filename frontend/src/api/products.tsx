@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 export interface Product {
   _id: string;
@@ -77,6 +78,19 @@ export function useAddProduct({ onSuccess }: { onSuccess: () => void }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       onSuccess();
+    },
+    onError: (
+      error: AxiosError<{
+        ValidationError: {
+          message: string;
+        }[];
+      }>
+    ) => {
+      console.log(error);
+      toast.error(
+        error.response?.data.ValidationError?.[0]?.message ||
+          "There was an error"
+      );
     },
   });
   return mutation;
