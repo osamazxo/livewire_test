@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
+const { v2: cloudinary } = require("cloudinary");
 const { default: mongoose } = require("mongoose");
-
 const appRouter = require("./src/app.router");
 const app = express();
 appRouter(app, express);
