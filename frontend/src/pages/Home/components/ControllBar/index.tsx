@@ -1,7 +1,9 @@
 import SearchIcon from "@assets/icons/search.svg?react";
 import PlusIcon from "@assets/icons/plus.svg?react";
 import AddProductForm from "./AddProductForm";
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 const sortOptions: { name: string; title: string }[] = [
   {
     name: "name-a",
@@ -21,6 +23,7 @@ const sortOptions: { name: string; title: string }[] = [
   },
 ];
 const ControllBar = () => {
+  const [params, setParams] = useSearchParams();
   const [formOpened, setFormOpened] = useState(false);
   const [sortMenuOpened, setSortMenuOpened] = useState(false);
   return (
@@ -31,6 +34,11 @@ const ControllBar = () => {
             type="text"
             name="search"
             placeholder="Search"
+            onChange={(e) => {
+              const newSearchParams = new URLSearchParams(params.toString());
+              newSearchParams.set("search", e.target.value);
+              setParams(newSearchParams);
+            }}
             className="border rounded border-[#E5E5E5] w-full h-[44px] pr-[46px] pl-[13px] focus:outline-none focus:border-[#D9F99D] hover:border-[#D9F99D] "
           />
           <SearchIcon className="absolute right-4 top-1/2 -translate-y-1/2" />
@@ -45,14 +53,31 @@ const ControllBar = () => {
                 onClick={() => setSortMenuOpened((old) => !old)}
                 className="h-[44px] rounded border border-[#E5E5E5] hover:border-[#D9F99D] px-[13px] py-[11px] min-w-[202.11px] w-full flex items-center text-[#737373] text-[14px] font-normal"
               >
-                Sort By
+                {!params.get("sort")
+                  ? "Sort By"
+                  : sortOptions.find((ele) => ele.name === params.get("sort"))
+                      ?.title}
+                <ChevronDown
+                  className={
+                    "absolute right-3 top-1/2 -translate-y-1/2 " +
+                    (sortMenuOpened ? "rotate-180" : "")
+                  }
+                />
               </button>
               {sortMenuOpened && (
-                <div className="absolute top-[46px] w-full border border-[#E4E4E4] rounded px-[11px] py-[15px]">
+                <div className="bg-white absolute top-[46px] w-full border border-[#E4E4E4] rounded px-[11px] py-[15px]">
                   {sortOptions.map((ele) => (
                     <div
                       key={ele.name}
-                      className="select-none cursor-pointer hover:text-[#8eb14e]"
+                      onClick={() => {
+                        const newSearchParams = new URLSearchParams(
+                          params.toString()
+                        );
+                        newSearchParams.set("sort", ele.name);
+                        setParams(newSearchParams);
+                        setSortMenuOpened(false);
+                      }}
+                      className="select-none cursor-pointer hover:text-[#8eb14e] text-[14px] font-light"
                     >
                       {ele.title}
                     </div>

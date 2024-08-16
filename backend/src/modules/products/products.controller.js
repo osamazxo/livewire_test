@@ -29,15 +29,14 @@ const addProduct = asyncHandler(async (req, res) => {
   const uploadResult = await cloudinary.uploader.upload(req.file.path);
 
   // add product to database
-  const formData = req.body;
   const product = new Product({
-    name: formData.name,
-    price: formData.price,
+    ...req.body,
     img: uploadResult.url,
+    file: undefined,
   });
   await product.save();
 
-  return res.status(500).json({
+  return res.status(200).json({
     success: true,
     product,
   });
