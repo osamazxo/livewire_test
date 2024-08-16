@@ -205,7 +205,7 @@ const AddProductForm = ({
               (isPending ? "bg-gray-400" : "bg-[#D9F99D] hover:bg-[#9ab862]")
             }
           >
-            {isPending ? (progress || 0) * 100 : "Upload item"}
+            {isPending ? ((progress || 0) * 100).toFixed(0) : "Upload item"}
           </button>
         </form>
       </div>
