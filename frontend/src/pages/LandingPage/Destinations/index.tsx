@@ -1,7 +1,7 @@
 import romeImg from "@assets/landing/destinations/rome.png";
 import londonImg from "@assets/landing/destinations/london.png";
 import europeImg from "@assets/landing/destinations/europe.png";
-import Decore from "@assets/landing/destinations/Decore.svg?react";
+import Decore from "@assets/landing/destinations/decore.svg?react";
 import PlaneIcon from "@assets/landing/destinations/planeIco.svg?react";
 
 const destinations = [
